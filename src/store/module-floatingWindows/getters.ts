@@ -14,6 +14,9 @@ const getters: GetterTree<FloatingWindowsStateInteface, StateInterface> = {
   },
   getDocumentPreviewWindowID (context) {
     return context.documentPreviewWindowID
+  },
+  getAiPanelVisible (context) {
+    return context.aiPanelVisible
   }
 }
 

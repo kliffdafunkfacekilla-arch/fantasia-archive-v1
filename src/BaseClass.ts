@@ -87,6 +87,9 @@ export default class BaseClass extends Vue {
   @FloatingWindows.Getter("getDocumentPreviewWindowID") SGET_getDocumentPreviewWindowID!: string
   @FloatingWindows.Mutation("setDocumentPreviewWindowID") SSET_setDocumentPreviewWindowID!: (input: string) => void
 
+  @FloatingWindows.Getter("getAiPanelVisible") SGET_getAiPanelVisible!: string
+  @FloatingWindows.Mutation("setAiPanelVisible") SSET_setAiPanelVisible!: () => void
+
   openDocumentPreviewPanel (id: string) {
     this.SSET_setDocumentPreviewWindowID(id)
     this.SSET_setDocumentPreviewWindowVisible(true)

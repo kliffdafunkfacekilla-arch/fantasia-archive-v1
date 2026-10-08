@@ -2,7 +2,8 @@ export interface FloatingWindowsStateInteface {
   advSearchWindowVisible: string,
   noteCorkboardWindowVisible: string,
   documentPreviewVisible: string,
-  documentPreviewWindowID: string
+  documentPreviewWindowID: string,
+  aiPanelVisible: string
 }
 
 function state (): FloatingWindowsStateInteface {
@@ -10,7 +11,8 @@ function state (): FloatingWindowsStateInteface {
     advSearchWindowVisible: "",
     noteCorkboardWindowVisible: "",
     documentPreviewVisible: "",
-    documentPreviewWindowID: ""
+    documentPreviewWindowID: "",
+    aiPanelVisible: ""
   }
 }
 
