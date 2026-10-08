@@ -8,6 +8,10 @@
       v-if="fullPageSeachPopupTrigger"
     />
 
+    <aiPanel
+      v-if="!isFrontpage"
+    />
+
     <!-- New document dialog -->
     <newDocumentDialog
       :dialog-trigger="newObjectDialogTrigger"
@@ -178,6 +182,37 @@
               <q-item-section>New project</q-item-section>
                <q-item-section avatar>
                 <q-icon name="mdi-plus" />
+              </q-item-section>
+            </q-item>
+
+            <q-item
+              v-close-popup
+              clickable
+              active
+              active-class="bg-gunmetal-light text-cultured"
+              class="noHigh"
+              @click="triggerObsidianImport"
+              :disable="!projectExists || isFrontpage"
+            >
+              <q-item-section>Import Obsidian Vault with AI</q-item-section>
+              <q-item-section avatar>
+                <q-icon name="mdi-folder-upload" />
+              </q-item-section>
+            </q-item>
+            <input type="file" webkitdirectory style="display: none" ref="obsidianVaultInput" @change="onObsidianVaultSelected" />
+
+            <q-item
+              v-close-popup
+              clickable
+              active
+              active-class="bg-gunmetal-light text-cultured"
+              class="noHigh"
+              @click="SSET_setAiPanelVisible"
+              :disable="!projectExists || isFrontpage"
+            >
+              <q-item-section>Show AI Assistant</q-item-section>
+              <q-item-section avatar>
+                <q-icon name="mdi-robot-outline" />
               </q-item-section>
             </q-item>
 
@@ -629,10 +664,12 @@ import { toggleDevTools } from "src/scripts/utilities/devTools"
 
 import appLogo from "src/assets/appLogo.png"
 import appSearchBox from "src/components/appHeader/AppSearchBox.vue"
+import aiPanel from "src/components/floatingWindows/AIPanel.vue"
 
 @Component({
   components: {
     appSearchBox,
+    aiPanel,
     projectCloseCheckDialog,
     keybindCheatsheetDialog,
     loadProjectCheckDialog,
@@ -658,6 +695,44 @@ export default class AppControl extends BaseClass {
   /****************************************************************/
   // Import handling
   /****************************************************************/
+
+  $refs!: {
+    obsidianVaultInput: HTMLInputElement;
+  }
+
+  triggerObsidianImport () {
+    this.$refs.obsidianVaultInput.click()
+  }
+
+  async onObsidianVaultSelected (event: Event) {
+    const target = event.target as HTMLInputElement
+    if (target.files && target.files.length > 0) {
+      const files = Array.from(target.files)
+      // We will handle the import in the vaultImporter
+      try {
+        const { importVault } = await import("src/scripts/vaultImporter")
+        await importVault(files, this)
+        this.$q.notify({
+          type: "positive",
+          message: "Obsidian Vault imported successfully with AI assistance!"
+        })
+      }
+      catch (err: unknown) {
+        if (err instanceof Error) {
+          this.$q.notify({
+            type: "negative",
+            message: "Error importing vault: " + err.message
+          })
+        }
+        else {
+          this.$q.notify({
+            type: "negative",
+            message: "Error importing vault: " + String(err)
+          })
+        }
+      }
+    }
+  }
 
   /**
    * Toggles the developer tools on and off

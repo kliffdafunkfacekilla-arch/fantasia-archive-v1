@@ -50,6 +50,10 @@ export interface OptionsStateInteface {
   treeWidth?: number
   pre017check?: boolean,
   legacyFieldsCheck018?: boolean
+
+  aiService: string
+  aiApiKey: string
+  aiModel: string
 }
 
 function state (): OptionsStateInteface {
@@ -101,7 +105,10 @@ function state (): OptionsStateInteface {
     treeWidth: 374,
     userKeybindList: [],
     pre017check: true,
-    legacyFieldsCheck018: true
+    legacyFieldsCheck018: true,
+    aiService: "gemini",
+    aiApiKey: "",
+    aiModel: "gemini-1.5-flash"
   }
 }
 

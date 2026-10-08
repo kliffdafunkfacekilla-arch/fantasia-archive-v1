@@ -18,6 +18,10 @@ const mutation: MutationTree<FloatingWindowsStateInteface> = {
 
   setDocumentPreviewWindowID (state: FloatingWindowsStateInteface, input: string) {
     state.documentPreviewWindowID = input
+  },
+
+  setAiPanelVisible (state: FloatingWindowsStateInteface) {
+    state.aiPanelVisible = uid()
   }
 }
 

@@ -26,6 +26,7 @@
           <q-tab name="popupSettings" label="Popups & Floating Windows" />
           <q-tab name="treeSettings" label="Hierarchical tree" />
           <q-tab name="tabSettings" label="Opened documents tabs" />
+          <q-tab name="aiSettings" label="AI Assistant" />
 
           <q-separator dark />
 
